@@ -2,5 +2,14 @@
   "name": "findafriend-api",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "fastify": "^4.26.2",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
+  }
 }
