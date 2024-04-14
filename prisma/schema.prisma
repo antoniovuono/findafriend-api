@@ -12,3 +12,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum UserType {
+  ORGANIZATION
+  NORMAL
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  whatsapp   String   @unique
+  user_type  UserType @default(NORMAL)
+  created_at DateTime @default(now())
+
+  @@map("users")
+}
