@@ -32,4 +32,5 @@ yarn start:dev
 
 [x] Configurar ESlint + Prettier  
 [ ] Instalação e configuração do Prisma
+[x] Criar container docker para virtualizar o banco de dados prisma
 [ ] Instalação e configuração vitest
