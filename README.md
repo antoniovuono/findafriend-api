@@ -34,3 +34,5 @@ yarn start:dev
 - [x] Instalação e configuração do Prisma
 - [x] Criar container docker para virtualizar o banco de dados prisma
 - [x] Instalação e configuração vitest
+- [ ] Configurar a tratativa de .env do projeto com zod.
+- [ ] Criar tratativa de erros globais.
