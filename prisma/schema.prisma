@@ -35,12 +35,13 @@ model User {
 }
 
 model Pet {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   surname     String
   color       String
   city        String
-  age         String
+  age         Int
   description String
+  created_at  DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
