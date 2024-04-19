@@ -1,7 +1,7 @@
 import { PetsRepository } from '@/repositories/pets-repository'
 import { UsersRepository } from '@/repositories/users-repository'
 import { Pet } from '@prisma/client'
-import { UserNotFoundError } from './errors/user-not-found-error'
+import { ResourceNotFound } from './errors/resource-not-found-error'
 
 interface CreatePetServiceRequest {
   surname: string
@@ -33,7 +33,7 @@ export class CreatePetService {
     const doesUserExist = await this.usersRepository.findById(userId)
 
     if (!doesUserExist) {
-      throw new UserNotFoundError()
+      throw new ResourceNotFound()
     }
 
     const pet = await this.petRepository.create({

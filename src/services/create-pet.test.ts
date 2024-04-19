@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { CreatePetService } from './create-pet'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { UserNotFoundError } from './errors/user-not-found-error'
+import { ResourceNotFound } from './errors/resource-not-found-error'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
 let petRepository: InMemoryPetsRepository
@@ -45,6 +45,6 @@ describe('Create Pet Service', () => {
         description: 'A very cute dog',
         userId: '123',
       })
-    }).rejects.toBeInstanceOf(UserNotFoundError)
+    }).rejects.toBeInstanceOf(ResourceNotFound)
   })
 })
