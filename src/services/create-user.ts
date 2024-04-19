@@ -2,6 +2,7 @@ import { UsersRepository } from '@/repositories/users-repository'
 import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
+import { IncompleteInputError } from './errors/incomplete-input-error'
 
 type UserTypeProps = 'ORGANIZATION' | 'NORMAL'
 
@@ -39,6 +40,10 @@ export class CreateUserService {
 
     if (emailAlreadyRegistered) {
       throw new UserAlreadyExistsError()
+    }
+
+    if (userType === 'ORGANIZATION' && (!address || !city || !postalCode)) {
+      throw new IncompleteInputError()
     }
 
     const user = await this.usersRepository.create({
