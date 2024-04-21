@@ -37,4 +37,12 @@ export class InMemoryPetsRepository implements PetsRepository {
 
     return pets
   }
+
+  async findManyBy(age?: number | undefined, color?: string | undefined) {
+    const pets = this.pet.filter(
+      (pet) => pet.age === age || pet.color === color,
+    )
+
+    return pets
+  }
 }
