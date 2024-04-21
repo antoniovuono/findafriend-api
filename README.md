@@ -8,6 +8,20 @@
 yarn start:dev
 ```
 
+## Testes unitários
+
+Para rodar os testes:
+
+```sh
+yarn test
+```
+
+Para rodar os testes em modo de observação:
+
+```sh
+yarn test:watch
+```
+
 # Requisitos do projeto:
 
 ## Requisitos funcionais:
