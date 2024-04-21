@@ -32,13 +32,16 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyByCity(city: string) {
+  async findManyByCity(city: string): Promise<Pet[]> {
     const pets = this.pet.filter((pet) => pet.city === city)
 
     return pets
   }
 
-  async findManyBy(age?: number | undefined, color?: string | undefined) {
+  async findManyByCharacteristics(
+    age?: number | undefined,
+    color?: string | undefined,
+  ): Promise<Pet[]> {
     const pets = this.pet.filter(
       (pet) => pet.age === age || pet.color === color,
     )
