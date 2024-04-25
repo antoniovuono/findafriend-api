@@ -1,4 +1,4 @@
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 import { CreateUserService } from '@/services/create-user'
 import { IncompleteInputError } from '@/services/errors/incomplete-input-error'
 import { UserAlreadyExistsError } from '@/services/errors/user-already-exists-error'
@@ -14,7 +14,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     userType: z.enum(['ORGANIZATION', 'NORMAL']).optional(),
     address: z.string().optional(),
     city: z.string().optional(),
-    postalCode: z.string().min(11).optional(),
+    postalCode: z.string().min(7).optional(),
   })
 
   const {
@@ -29,7 +29,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   } = createUserBodySchema.parse(request.body)
 
   try {
-    const usersRepository = new InMemoryUsersRepository()
+    const usersRepository = new PrismaUsersRepository()
     const createUserService = new CreateUserService(usersRepository)
 
     await createUserService.execute({
