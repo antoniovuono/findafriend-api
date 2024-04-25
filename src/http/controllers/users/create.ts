@@ -6,29 +6,29 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
-  const createUserBodySchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string().min(6),
-    whatsapp: z.string().min(11),
-    userType: z.enum(['ORGANIZATION', 'NORMAL']).optional(),
-    address: z.string().optional(),
-    city: z.string().optional(),
-    postalCode: z.string().min(7).optional(),
-  })
-
-  const {
-    name,
-    email,
-    password,
-    whatsapp,
-    address,
-    city,
-    postalCode,
-    userType,
-  } = createUserBodySchema.parse(request.body)
-
   try {
+    const createUserBodySchema = z.object({
+      name: z.string(),
+      email: z.string().email(),
+      password: z.string().min(6),
+      whatsapp: z.string().min(11),
+      userType: z.enum(['ORGANIZATION', 'NORMAL']).optional(),
+      address: z.string().optional(),
+      city: z.string().optional(),
+      postalCode: z.string().min(7).optional(),
+    })
+
+    const {
+      name,
+      email,
+      password,
+      whatsapp,
+      address,
+      city,
+      postalCode,
+      userType,
+    } = createUserBodySchema.parse(request.body)
+
     const usersRepository = new PrismaUsersRepository()
     const createUserService = new CreateUserService(usersRepository)
 
