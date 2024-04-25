@@ -1,7 +1,6 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { CreatePetService } from './create-pet'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
-import { ResourceNotFound } from './errors/resource-not-found-error'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 
 let petRepository: InMemoryPetsRepository
@@ -12,7 +11,7 @@ describe('Create Pet Service', () => {
   beforeEach(() => {
     petRepository = new InMemoryPetsRepository()
     usersRepository = new InMemoryUsersRepository()
-    createPetService = new CreatePetService(petRepository, usersRepository)
+    createPetService = new CreatePetService(petRepository)
   })
 
   it('should be able to create a new pet', async () => {
@@ -22,6 +21,8 @@ describe('Create Pet Service', () => {
       password: '123456',
       whatsapp: '123456789',
     })
+
+    console.log(id)
 
     const { pet } = await createPetService.execute({
       surname: 'Rex',
@@ -33,18 +34,5 @@ describe('Create Pet Service', () => {
     })
 
     expect(pet.id).toEqual(expect.any(String))
-  })
-
-  it("should not be able to create a new pet if the user doesn't exist", async () => {
-    await expect(async () => {
-      await createPetService.execute({
-        surname: 'Rex',
-        color: 'Black',
-        city: 'New York',
-        age: 3,
-        description: 'A very cute dog',
-        userId: '123',
-      })
-    }).rejects.toBeInstanceOf(ResourceNotFound)
   })
 })
