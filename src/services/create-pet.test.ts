@@ -22,8 +22,6 @@ describe('Create Pet Service', () => {
       whatsapp: '123456789',
     })
 
-    console.log(id)
-
     const { pet } = await createPetService.execute({
       surname: 'Rex',
       color: 'Black',
