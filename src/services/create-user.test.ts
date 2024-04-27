@@ -4,6 +4,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { compare } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import { IncompleteInputError } from './errors/incomplete-input-error'
+import { WhatsappAlreadyRegisteredError } from './errors/whatsapp-already-registered-error'
 
 let usersRepository: InMemoryUsersRepository
 let createUserService: CreateUserService
@@ -80,5 +81,23 @@ describe('Create User Service', () => {
         userType: 'ORGANIZATION',
       })
     }).rejects.toBeInstanceOf(IncompleteInputError)
+  })
+
+  it('should not be able to create a user with an existing whatsapp', async () => {
+    await createUserService.execute({
+      name: 'John Doe ',
+      email: 'jhondoe@example.com',
+      password: '123456',
+      whatsapp: '123456789',
+    })
+
+    await expect(async () => {
+      await createUserService.execute({
+        name: 'John Doe ',
+        email: 'jhondoe1@example.com',
+        password: '123456',
+        whatsapp: '123456789',
+      })
+    }).rejects.toBeInstanceOf(WhatsappAlreadyRegisteredError)
   })
 })

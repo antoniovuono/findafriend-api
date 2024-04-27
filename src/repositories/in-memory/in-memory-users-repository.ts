@@ -43,4 +43,14 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return user
   }
+
+  async findByWhatsapp(whatsapp: string): Promise<User | null> {
+    const user = this.users.find((user) => user.whatsapp === whatsapp)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
 }

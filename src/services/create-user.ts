@@ -3,6 +3,7 @@ import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import { IncompleteInputError } from './errors/incomplete-input-error'
+import { WhatsappAlreadyRegisteredError } from './errors/whatsapp-already-registered-error'
 
 type UserTypeProps = 'ORGANIZATION' | 'NORMAL'
 
@@ -37,9 +38,15 @@ export class CreateUserService {
     const passwordHash = await hash(password, 8)
 
     const emailAlreadyRegistered = await this.usersRepository.findByEmail(email)
+    const whatsappAlreadyRegistered =
+      await this.usersRepository.findByWhatsapp(whatsapp)
 
     if (emailAlreadyRegistered) {
       throw new UserAlreadyExistsError()
+    }
+
+    if (whatsappAlreadyRegistered) {
+      throw new WhatsappAlreadyRegisteredError()
     }
 
     if (userType === 'ORGANIZATION' && (!address || !city || !postalCode)) {
