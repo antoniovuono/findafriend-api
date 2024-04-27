@@ -1,7 +1,6 @@
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
-import { CreateUserService } from '@/services/create-user'
 import { IncompleteInputError } from '@/services/errors/incomplete-input-error'
 import { UserAlreadyExistsError } from '@/services/errors/user-already-exists-error'
+import { makeCreateUserService } from '@/services/factories/make-create-user-service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -29,8 +28,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       userType,
     } = createUserBodySchema.parse(request.body)
 
-    const usersRepository = new PrismaUsersRepository()
-    const createUserService = new CreateUserService(usersRepository)
+    const createUserService = makeCreateUserService()
 
     await createUserService.execute({
       name,

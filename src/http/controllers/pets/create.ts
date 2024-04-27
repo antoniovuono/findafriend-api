@@ -1,6 +1,5 @@
-import { PrismaPetsRepository } from '@/repositories/prisma/prisma-pets-repository'
-import { CreatePetService } from '@/services/create-pet'
 import { ResourceNotFound } from '@/services/errors/resource-not-found-error'
+import { makeCreatePetService } from '@/services/factories/make-create-pet-service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -17,8 +16,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     const { surname, color, city, age, description } =
       createPetBodySchema.parse(request.body)
 
-    const petsRepository = new PrismaPetsRepository()
-    const petService = new CreatePetService(petsRepository)
+    const petService = makeCreatePetService()
 
     await petService.execute({
       surname,
