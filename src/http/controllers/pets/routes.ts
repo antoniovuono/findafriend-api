@@ -4,6 +4,7 @@ import { verifyJwt } from '@/http/middlewares/verify-jwt'
 import { verifyUserType } from '@/http/middlewares/verify-user-type'
 import { listByCity } from './list-by-city'
 import { findUnique } from './find-unique'
+import { filterPets } from './filter'
 
 export async function petsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJwt)
@@ -12,4 +13,5 @@ export async function petsRoutes(app: FastifyInstance) {
 
   app.get('/pets/:city', listByCity)
   app.get('/pets/search/:id', findUnique)
+  app.get('/pets/filter', filterPets)
 }
