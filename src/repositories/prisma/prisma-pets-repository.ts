@@ -25,7 +25,7 @@ export class PrismaPetsRepository implements PetsRepository {
     return pets
   }
 
-  findManyByCharacteristics(
+  async findManyByCharacteristics(
     age?: number | undefined,
     color?: string | undefined,
   ): Promise<Pet[]> {
@@ -34,7 +34,7 @@ export class PrismaPetsRepository implements PetsRepository {
     if (age !== undefined) whereClause.age = age
     if (color !== undefined) whereClause.color = color
 
-    const pets = prisma.pet.findMany({
+    const pets = await prisma.pet.findMany({
       where: whereClause,
     })
 
